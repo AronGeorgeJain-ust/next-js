@@ -2,5 +2,5 @@ projectKey=pos-next
 serverUrl=http://localhost:9000
 serverVersion=26.1.0.118079
 dashboardUrl=http://localhost:9000/dashboard?id=pos-next
-ceTaskId=3e12b49e-97b8-4e03-bd6c-a4f5d24421c8
-ceTaskUrl=http://localhost:9000/api/ce/task?id=3e12b49e-97b8-4e03-bd6c-a4f5d24421c8
+ceTaskId=8a2e65db-87a2-44e7-b6d2-b3a4d25e6b20
+ceTaskUrl=http://localhost:9000/api/ce/task?id=8a2e65db-87a2-44e7-b6d2-b3a4d25e6b20

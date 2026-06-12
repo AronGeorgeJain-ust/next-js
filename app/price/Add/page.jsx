@@ -75,7 +75,7 @@ const PriceAdd = () => {
       fields={fields}
       initialData={initialData}
     >
-      {/* Product dropdown */}
+
       <Dropdown
         name="productName"
         label="Product"

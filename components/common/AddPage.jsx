@@ -70,7 +70,7 @@ const AddPage = ({ modelName, fields, initialData, children }) => {
       setTimeout(() => router.push(`/${modelName}`), 800);
     } catch (err) {
       console.error(err);
-      // Surface the backend error message if available
+
       const errMsg =
         err?.response?.data?.message ||
         err?.response?.data?.error ||

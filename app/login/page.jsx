@@ -123,7 +123,6 @@ export default function LoginPage() {
             )}
           </div>
 
-          {/* Password */}
           <div>
             <label htmlFor="password" className="text-sm text-gray-600 font-medium">
               Password
@@ -152,7 +151,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Button */}
           <button
             type="submit"
             disabled={loading}

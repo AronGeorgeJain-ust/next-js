@@ -15,7 +15,7 @@ export default function RegisterForm({ roles = [] }) {
     name: "",
     username: "",
     phoneNo: "",
-    userCredential: "",   // renamed from "password"
+    userCredential: "",
     roles: [],
   });
 
@@ -43,7 +43,6 @@ export default function RegisterForm({ roles = [] }) {
     setLoading(true);
 
     try {
-      // Map userCredential back to "password" for the backend
       const { userCredential, ...rest } = form;
       const payload = { ...rest, password: userCredential };
 
@@ -91,7 +90,7 @@ export default function RegisterForm({ roles = [] }) {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
+
           <div>
             <input
               name="name"
@@ -103,7 +102,6 @@ export default function RegisterForm({ roles = [] }) {
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
 
-          {/* Email */}
           <div>
             <input
               name="username"
@@ -115,7 +113,6 @@ export default function RegisterForm({ roles = [] }) {
             {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
           </div>
 
-          {/* Roles */}
           <div>
             <Dropdown
               name="roles"
@@ -132,7 +129,6 @@ export default function RegisterForm({ roles = [] }) {
             {errors.roles && <p className="text-red-500 text-sm mt-1">{errors.roles}</p>}
           </div>
 
-          {/* Phone */}
           <div>
             <input
               name="phoneNo"
@@ -144,12 +140,11 @@ export default function RegisterForm({ roles = [] }) {
             {errors.phoneNo && <p className="text-red-500 text-sm mt-1">{errors.phoneNo}</p>}
           </div>
 
-          {/* Password */}
           <div>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                name="userCredential"    // renamed from "password"
+                name="userCredential"
                 placeholder="Password"
                 value={form.userCredential}
                 onChange={handleChange}
