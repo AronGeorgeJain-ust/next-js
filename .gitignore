@@ -41,4 +41,5 @@ yarn-error.log*
 next-env.d.ts
 sonar-project.properties
 ./sonar
-./.scannerwork
+.scannerwork
+sonar-project.properties
