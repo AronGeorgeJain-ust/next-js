@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 import ListPage from "@/components/common/ListPage";
 import api from "@/services/api";
-import ProductEdit from "./Edit/page";
 
-const ProductList = () => {
-  const keys = ["id", "identifier", "name", "brandName", "category", "unit", "description", "status"];
-  const modelName = "product";
-
-  const token = globalThis.window === undefined ? null : localStorage.getItem("token");
+const ModelList = ({ keys, modelName, EditComponent }) => {
+  const token =
+    globalThis.window === undefined ? null : localStorage.getItem("token");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -18,15 +16,9 @@ const ProductList = () => {
 
   const handleEdit = async (identifier) => {
     try {
-      const res = await api.get(
-        `/${modelName}/get?identifier=${identifier}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+      const res = await api.get(`/${modelName}/get?identifier=${identifier}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setSelectedItem(res.data);
       setIsModalOpen(true);
     } catch (err) {
@@ -48,14 +40,22 @@ const ProductList = () => {
         setListUpdateHandler={setListUpdateHandler}
       />
 
-      <ProductEdit
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        item={selectedItem}
-        onUpdateSuccess={handleUpdateSuccess}
-      />
+      {EditComponent && (
+        <EditComponent
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          item={selectedItem}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
+      )}
     </div>
   );
 };
 
-export default ProductList;
+ModelList.propTypes = {
+  keys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  modelName: PropTypes.string.isRequired,
+  EditComponent: PropTypes.elementType,
+};
+
+export default ModelList;

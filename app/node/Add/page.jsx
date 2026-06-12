@@ -1,11 +1,9 @@
 "use client";
 
 import AddPage from "@/components/common/AddPage";
-
 import Dropdown from "@/components/dropdown/Dropdown";
 
 const NodeAdd = () => {
-
   const fields = [
     {
       name: "identifier",
@@ -25,22 +23,22 @@ const NodeAdd = () => {
     roles: [],
   };
 
-  const modelName = "node";
-
   return (
     <AddPage
-      modelName={modelName}
+      modelName="node"
       fields={fields}
       initialData={initialData}
     >
       <Dropdown
         name="roles"
-        label="Role"
+        label="Roles"
         placeholder="Select Roles"
         endpoint="/role/list"
+        method="post"
+        requestBody={{ page: 0, sizePerPage: 100 }}
         multiple
-        optionValue={(item) => item?.identifier ?? item?.name ?? item}
-        optionLabel={(item) => item?.name ?? item?.identifier ?? item}
+        optionValue={(item) => item?.identifier ?? item?.name ?? String(item)}
+        optionLabel={(item) => item?.name ?? item?.identifier ?? String(item)}
       />
     </AddPage>
   );

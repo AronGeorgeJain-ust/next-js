@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import api from "@/services/api";
 
@@ -28,10 +28,17 @@ const Dropdown = ({
   selectClassName = "w-full rounded-xl border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500",
 }) => {
   const [items, setItems] = useState(options || []);
+  const [fetchError, setFetchError] = useState("");
 
   const errorMessage = errors?.[name];
   const effectiveValue = value ?? formData?.[name];
   const effectiveOnChange = onChange ?? handleChange;
+
+  // Stable ref for requestBody to avoid re-fetching on every render
+  const requestBodyRef = useRef(requestBody);
+  useEffect(() => {
+    requestBodyRef.current = requestBody;
+  }, [JSON.stringify(requestBody)]);
 
   const getToken = () =>
     globalThis.window?.localStorage?.getItem("token") ?? null;
@@ -42,13 +49,12 @@ const Dropdown = ({
       return;
     }
 
-    if (disableFetch || !endpoint) {
-      return;
-    }
+    if (disableFetch || !endpoint) return;
 
     let isMounted = true;
 
     const fetchData = async () => {
+      setFetchError("");
       try {
         const token = getToken();
         const headers = {
@@ -63,34 +69,41 @@ const Dropdown = ({
         const response = await api.request({
           url: endpoint,
           method,
-          data: requestBody,
+          data: requestBodyRef.current,
           headers,
         });
 
         const responseData = response?.data;
-        const nextItems = responseData?.dtoList ?? responseData?.content ?? responseData ?? [];
+
+        // Handle all common response shapes
+        const nextItems =
+          responseData?.dtoList ??
+          responseData?.content ??
+          responseData?.data ??
+          (Array.isArray(responseData) ? responseData : []);
 
         if (isMounted) {
           setItems(nextItems);
         }
       } catch (error) {
-        console.error(error);
+        console.error(`Dropdown [${name}] fetch error:`, error);
+        if (isMounted) setFetchError("Failed to load options.");
       }
     };
 
     fetchData();
 
-    return () => {
-      isMounted = false;
-    };
-  }, [endpoint, method, disableFetch, options, requestHeaders]);
+    return () => { isMounted = false; };
+  }, [endpoint, method, disableFetch, name]);  // removed options/requestHeaders from deps — use refs instead
 
   const ensureArray = (val) => {
     if (Array.isArray(val)) return val;
     return val ? [val] : [];
   };
 
-  const normalizedValue = multiple ? ensureArray(effectiveValue) : effectiveValue ?? "";
+  const normalizedValue = multiple
+    ? ensureArray(effectiveValue)
+    : (effectiveValue ?? "");
 
   const handleSelectChange = (e) => {
     const nextValue = multiple
@@ -100,10 +113,7 @@ const Dropdown = ({
     const finalValue = normalizeValue ? normalizeValue(nextValue) : nextValue;
 
     effectiveOnChange?.({
-      target: {
-        name,
-        value: finalValue,
-      },
+      target: { name, value: finalValue },
     });
   };
 
@@ -121,7 +131,7 @@ const Dropdown = ({
         value={normalizedValue}
         onChange={handleSelectChange}
         multiple={multiple}
-        className={selectClassName}
+        className={`${selectClassName} ${errorMessage ? "border-red-400" : ""}`}
       >
         {!multiple && (
           <option value="">{placeholder}</option>
@@ -130,15 +140,19 @@ const Dropdown = ({
         {renderedOptions.map((item, index) => (
           <option
             key={optionKey(item, index)}
-            value={optionValue(item)}
+            value={String(optionValue(item))}
           >
             {optionLabel(item)}
           </option>
         ))}
       </select>
 
+      {fetchError && (
+        <p className="mt-1 text-xs text-orange-500">{fetchError}</p>
+      )}
+
       {errorMessage && (
-        <p className="mt-2 text-sm text-red-500">{errorMessage}</p>
+        <p className="mt-1 text-sm text-red-500">{errorMessage}</p>
       )}
     </div>
   );

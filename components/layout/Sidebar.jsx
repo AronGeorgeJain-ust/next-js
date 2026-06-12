@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronLeft } from "lucide-react";
 
 import api from "@/services/api";
 
@@ -60,25 +59,7 @@ export default function Sidebar({ collapsed = false, onToggleCollapse = () => {}
       }}
       className="text-white flex flex-col shadow-2xl"
     >
-      <div
-        style={{ borderBottomColor: "rgba(100,116,139,0.3)" }}
-        className="flex items-center justify-between px-6 py-5 border-b"
-      >
-        <div>
-          <h2 className="text-lg font-bold tracking-wide text-white">POS Menu</h2>
-          <p className="text-xs mt-0.5" style={{ color: "#94a3b8" }}>Manage your system</p>
-        </div>
-        <button
-          onClick={onToggleCollapse}
-          style={{ backgroundColor: "#1e293b", borderColor: "#334155" }}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-xl border text-slate-300 hover:text-white transition"
-          aria-label="Collapse sidebar"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </button>
-      </div>
 
-      {/* Menu */}
       <div className="flex-1 overflow-y-auto space-y-1.5 px-4 py-4">
         {loading && (
           <div className="space-y-2 animate-pulse">
