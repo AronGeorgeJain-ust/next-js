@@ -33,8 +33,7 @@ const Dropdown = ({
   const errorMessage = errors?.[name];
   const effectiveValue = value ?? formData?.[name];
   const effectiveOnChange = onChange ?? handleChange;
-
-  // Stable ref for requestBody to avoid re-fetching on every render
+  
   const requestBodyRef = useRef(requestBody);
   useEffect(() => {
     requestBodyRef.current = requestBody;
@@ -75,7 +74,6 @@ const Dropdown = ({
 
         const responseData = response?.data;
 
-        // Handle all common response shapes
         const nextItems =
           responseData?.dtoList ??
           responseData?.content ??

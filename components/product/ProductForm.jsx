@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import Dropdown from "@/components/dropdown/Dropdown";
 
 export const productBaseFields = [
@@ -40,7 +42,7 @@ export const productValidationFields = [
   "unit",
 ];
 
-const ProductForm = () => (
+const ProductForm = ({ formData, handleChange, errors }) => (
   <>
     <Dropdown
       name="brandName"
@@ -49,6 +51,9 @@ const ProductForm = () => (
       endpoint="/brand/list"
       optionValue={(item) => item.identifier}
       optionLabel={(item) => item.name}
+      formData={formData}
+      handleChange={handleChange}
+      errors={errors}
     />
 
     <Dropdown
@@ -58,6 +63,9 @@ const ProductForm = () => (
       endpoint="/model/list"
       optionValue={(item) => item.identifier}
       optionLabel={(item) => item.identifier}
+      formData={formData}
+      handleChange={handleChange}
+      errors={errors}
     />
 
     <Dropdown
@@ -68,6 +76,9 @@ const ProductForm = () => (
       multiple
       optionValue={(item) => item.name}
       optionLabel={(item) => item.name}
+      formData={formData}
+      handleChange={handleChange}
+      errors={errors}
     />
 
     <Dropdown
@@ -77,8 +88,33 @@ const ProductForm = () => (
       endpoint="/unit/list"
       optionValue={(item) => item.identifier}
       optionLabel={(item) => item.identifier}
+      formData={formData}
+      handleChange={handleChange}
+      errors={errors}
     />
   </>
 );
+
+ProductForm.propTypes = {
+  formData: PropTypes.shape({
+    identifier: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    brandName: PropTypes.string,
+    model: PropTypes.string,
+    category: PropTypes.arrayOf(PropTypes.string),
+    unit: PropTypes.string,
+  }),
+  handleChange: PropTypes.func,
+  errors: PropTypes.shape({
+    identifier: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    brandName: PropTypes.string,
+    model: PropTypes.string,
+    category: PropTypes.string,
+    unit: PropTypes.string,
+  }),
+};
 
 export default ProductForm;
