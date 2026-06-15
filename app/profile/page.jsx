@@ -7,15 +7,16 @@ const ProfilePage = () => {
   const [profile, setProfile] = useState({
     username: "",
     role: "",
-    email: "",
+    name: "",
   });
 
   useEffect(() => {
+    
     if (globalThis.window) {
       setProfile({
         username: globalThis.window.localStorage.getItem("username") || "",
-        role: globalThis.window.localStorage.getItem("userRole") || "",
-        email: globalThis.window.localStorage.getItem("email") || "",
+        role: globalThis.window.localStorage.getItem("userRoles") || "",
+        name: globalThis.window.localStorage.getItem("name") || "",
       });
     }
   }, []);

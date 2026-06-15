@@ -8,7 +8,7 @@ import { Search, X } from "lucide-react";
 
 import api from "@/services/api";
 
-const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler }) => {
+const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns = [] }) => {
   const router = useRouter();
 
   let token = null;
@@ -196,7 +196,13 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler }) => {
                         {key}
                       </th>
                     ))}
-                    <th>Actions</th>
+                    {/* ── EXTRA COLUMNS headers ── */}
+                    {extraColumns.map((col) => (
+                      <th key={col.header} className="py-3 px-3 text-left">
+                        {col.header}
+                      </th>
+                    ))}
+                    <th className="py-3 px-3 text-left">Actions</th>
                   </tr>
                 </thead>
 
@@ -204,76 +210,63 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler }) => {
                   {filteredData.map(({ item, rowIndex }) => {
                     const displayedRowIndex = isSearching ? rowIndex : page * sizePerPage + rowIndex;
                     return (
-                    <tr key={getItemIdentifier(item, rowIndex)} 
-                    className="border-b hover:bg-blue-100/40 transition">
+                      <tr
+                        key={getItemIdentifier(item, rowIndex)}
+                        className="border-b hover:bg-blue-100/40 transition"
+                      >
+                        {keys.map((key) =>
+                          key === "status" ? (
+                            <td key={`${getItemIdentifier(item, rowIndex)}-${key}`} className="py-3 px-3">
+                              <label className="relative inline-flex items-center cursor-pointer" aria-label="Toggle status">
+                                <input
+                                  type="checkbox"
+                                  className="sr-only peer"
+                                  checked={item[key] === true}
+                                  onChange={() => handleToggleStatus(rowIndex)}
+                                />
+                                <div className="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-colors duration-300" />
+                                <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-300 peer-checked:translate-x-5" />
+                              </label>
+                            </td>
+                          ) : (
+                            <td key={`${getItemIdentifier(item, rowIndex)}-${key}`} className="py-3 px-3">
+                              {key === "id" ? displayedRowIndex + 1 : String(item[key] ?? "")}
+                            </td>
+                          )
+                        )}
 
-                      {keys.map((key, colIndex) =>
-                        key === "status" ? (
-                          <td key={`${getItemIdentifier(item, rowIndex)}-${key}`} className="py-3 px-3">
-                            <label className="relative inline-flex items-center cursor-pointer" aria-label="Toggle status">
-  
-                            <input
-                              type="checkbox"
-                              className="sr-only peer"
-                              checked={item[key] === true}
-                              onChange={() => handleToggleStatus(rowIndex)}
-                            />
-
-                            <div
-                              className="
-                                w-11 h-6 bg-gray-300 rounded-full
-                                peer-checked:bg-green-500
-                                transition-colors duration-300
-                              "
-                            />
-
-                            <div
-                              className="
-                                absolute
-                                left-1 top-1
-                                w-4 h-4 bg-white rounded-full shadow
-                                transform transition-transform duration-300
-                                peer-checked:translate-x-5
-                              "
-                            />
-
-                          </label>
+                        {/* ── EXTRA COLUMNS cells ── */}
+                        {extraColumns.map((col) => (
+                          <td key={`${getItemIdentifier(item, rowIndex)}-${col.header}`} className="py-3 px-3">
+                            {col.render(item)}
                           </td>
-                        ) : (
-                          <td key={`${getItemIdentifier(item, rowIndex)}-${key}`}>
-                            {key === "id"
-                              ? displayedRowIndex + 1
-                              : String(item[key])}
-                          </td>
-                        )
-                      )}
+                        ))}
 
-                      <td className="py-3 px-3">
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => onEdit(getItemIdentifier(item, rowIndex), fetchList)}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg shadow"
-                          >
-                            Update
-                          </button>
+                        <td className="py-3 px-3">
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => onEdit(getItemIdentifier(item, rowIndex), fetchList)}
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg shadow"
+                            >
+                              Update
+                            </button>
 
-                          <button
-                            onClick={() => handleDelete(getItemIdentifier(item, rowIndex))}
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg shadow"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
+                            <button
+                              onClick={() => handleDelete(getItemIdentifier(item, rowIndex))}
+                              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg shadow"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
 
-                    </tr>
+                      </tr>
                     );
                   })}
                 </tbody>
 
               </table>
 
-              {/* Pagination */}
               {!isSearching && (
                 <div className="flex justify-center gap-3 mt-4">
                   <button
@@ -302,7 +295,6 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler }) => {
           )}
         </div>
 
-        {/* Navigation */}
         <div className="flex justify-center gap-4 mt-6">
           <button
             onClick={() => router.push("/home")}
@@ -329,6 +321,12 @@ ListPage.propTypes = {
   modelName: PropTypes.string.isRequired,
   onEdit: PropTypes.func,
   setListUpdateHandler: PropTypes.func,
+  extraColumns: PropTypes.arrayOf(
+    PropTypes.shape({
+      header: PropTypes.string.isRequired,
+      render: PropTypes.func.isRequired,
+    })
+  ),
 };
 
 export default ListPage;

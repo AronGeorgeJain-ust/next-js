@@ -62,7 +62,7 @@ const PriceAdd = () => {
   const fields = [];
 
   const initialData = {
-    productName: "",
+    product: "",
     priceType: "",
     value: "",
   };
@@ -77,7 +77,7 @@ const PriceAdd = () => {
     >
 
       <Dropdown
-        name="productName"
+        name="product"
         label="Product"
         placeholder="Select Product"
         endpoint="/product/list"

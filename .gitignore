@@ -42,4 +42,4 @@ next-env.d.ts
 sonar-project.properties
 ./sonar
 .scannerwork
-sonar-project.properties
+.scannerwork/*

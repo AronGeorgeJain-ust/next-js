@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import ListPage from "@/components/common/ListPage";
 import api from "@/services/api";
 
-const ModelList = ({ keys, modelName, EditComponent }) => {
+const ModelList = ({ keys, modelName, EditComponent, extraColumns }) => {
   const token =
     globalThis.window === undefined ? null : localStorage.getItem("token");
 
@@ -38,6 +38,7 @@ const ModelList = ({ keys, modelName, EditComponent }) => {
         modelName={modelName}
         onEdit={handleEdit}
         setListUpdateHandler={setListUpdateHandler}
+        extraColumns={extraColumns}
       />
 
       {EditComponent && (
@@ -56,6 +57,12 @@ ModelList.propTypes = {
   keys: PropTypes.arrayOf(PropTypes.string).isRequired,
   modelName: PropTypes.string.isRequired,
   EditComponent: PropTypes.elementType,
+  extraColumns: PropTypes.arrayOf(
+    PropTypes.shape({
+      header: PropTypes.string.isRequired,
+      render: PropTypes.func.isRequired,
+    })
+  ),
 };
 
 export default ModelList;
