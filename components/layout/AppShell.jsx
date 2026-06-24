@@ -26,11 +26,11 @@ export default function AppShell({ children }) {
 
       <main
         style={{
-          marginTop: "4rem",           // clears the fixed navbar
+          marginTop: "4rem",
           marginLeft: collapsed ? "0" : "16rem",
           transition: "margin-left 0.3s ease",
           minHeight: "calc(100vh - 4rem)",
-          backgroundColor: "#f1f5f9",  // page content area light bg
+          backgroundColor: "#f1f5f9",
         }}
       >
         {children}

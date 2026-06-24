@@ -99,8 +99,7 @@ const CustomerForm = ({
 
   return (
     <>
-      {/* Party Type */}
-      <div className="w-full">
+=      <div className="w-full">
         <label
           htmlFor="partyType"
           className="block mb-2 text-sm font-semibold text-gray-700"
@@ -128,7 +127,6 @@ const CustomerForm = ({
         )}
       </div>
 
-      {/* Balance */}
       <div className="w-full">
         <label
           htmlFor="balance"
@@ -166,7 +164,6 @@ const CustomerForm = ({
         )}
       </div>
 
-      {/* Billing Address */}
       <div className="w-full">
         <p className="mb-3 text-sm font-bold text-red-500">
           — Billing Address
@@ -245,7 +242,6 @@ const CustomerForm = ({
         </div>
       </div>
 
-      {/* Shipping Address */}
       <div className="w-full">
         <p className="mb-3 text-sm font-bold text-red-500">
           — Shipping Address

@@ -8,6 +8,7 @@ const Dropdown = ({
   name,
   label,
   placeholder = "Select",
+  disabled = false,
   value,
   onChange,
   formData,
@@ -92,7 +93,7 @@ const Dropdown = ({
     fetchData();
 
     return () => { isMounted = false; };
-  }, [endpoint, method, disableFetch, name]);  // removed options/requestHeaders from deps — use refs instead
+  }, [endpoint, method, disableFetch, name]);
 
   const ensureArray = (val) => {
     if (Array.isArray(val)) return val;
@@ -130,6 +131,7 @@ const Dropdown = ({
         onChange={handleSelectChange}
         multiple={multiple}
         className={`${selectClassName} ${errorMessage ? "border-red-400" : ""}`}
+        disabled={disabled}
       >
         {!multiple && (
           <option value="">{placeholder}</option>
@@ -160,6 +162,7 @@ Dropdown.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onChange: PropTypes.func,
   formData: PropTypes.object,

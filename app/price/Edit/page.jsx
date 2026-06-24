@@ -17,23 +17,24 @@ const PriceEdit = ({
     <EntityEdit
       title="Edit Price"
       endpoint="/price/update"
-      validationFields={[...editableFields, "productName"]}
+      validationFields={[...editableFields, "product"]}
       redirectTo="/price"
       item={item}
       isOpen={isOpen}
       onClose={onClose}
       onUpdateSuccess={onUpdateSuccess}
     >
-      <EditModal editableFields={editableFields} />
-
       <Dropdown
-        name="productName"
+        name="product"
         label="Product"
         placeholder="Select Product"
         endpoint="/product/list"
+        disabled={true}
         optionValue={(item) => item.identifier}
         optionLabel={(item) => item.name}
       />
+
+      <EditModal editableFields={editableFields} />
     </EntityEdit>
   );
 };

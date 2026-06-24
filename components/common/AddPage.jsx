@@ -12,7 +12,7 @@ const AddPage = ({ modelName, fields, initialData, children }) => {
   const router = useRouter();
   const [formData, setFormData] = useState(initialData);
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState("error"); // "success" | "error"
+  const [messageType, setMessageType] = useState("error");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,6 @@ const AddPage = ({ modelName, fields, initialData, children }) => {
 
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear the field error as the user types
     setErrors((prev) => {
       if (!prev[name]) return prev;
       const next = { ...prev };
@@ -57,7 +56,6 @@ const AddPage = ({ modelName, fields, initialData, children }) => {
 
       const data = res.data;
 
-      // Backend returned success: false (e.g. duplicate identifier/path)
       if (data?.success === false) {
         setMessage(data.message || "Failed to save. Please check your inputs.");
         setMessageType("error");

@@ -6,6 +6,25 @@ const EditModal = ({
   editableFields,
   errors = {},
 }) => {
+  const AUDIT_FIELDS = [
+    "createdBy",
+    "createdOn",
+    "modifiedBy",
+    "modifiedOn",
+  ];
+
+  console.log("formData", formData);
+
+  const formatValue = (field, value) => {
+  if (value == null) return "Not Available";
+
+  if (field === "createdOn" || field === "modifiedOn") {
+    return new Date(value).toLocaleString();
+  }
+
+  return value;
+};
+
   return (
     <div className="space-y-4">
       {editableFields.map((key) => (
@@ -19,7 +38,7 @@ const EditModal = ({
             name={key}
             value={formData[key] || ""}
             onChange={handleChange}
-            readOnly={key === "identifier"}
+            readOnly={key === "identifier" || key === "priceType"}
             className={`w-full border rounded-lg px-3 py-2 ${
               key === "identifier"
                 ? "bg-gray-100 cursor-not-allowed"
@@ -33,6 +52,27 @@ const EditModal = ({
           )}
         </div>
       ))}
+      
+      <div className="border-t pt-4 mt-4">
+        <h3 className="font-semibold mb-3 text-gray-700">
+          Audit Information
+        </h3>
+
+        {AUDIT_FIELDS.map((field) => (
+          <div key={field} className="mb-3">
+            <label className="block mb-1 font-medium">
+              {field}
+            </label>
+
+            <input
+              type="text"
+              value={formatValue(field, formData[field])}
+              readOnly
+              className="w-full border rounded-lg px-3 py-2 bg-gray-100 cursor-not-allowed"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

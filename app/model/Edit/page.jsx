@@ -15,9 +15,9 @@ const ModelsEdit = ({
   return (
     <EntityEdit
       title="Edit Models"
-      endpoint="/models/update"
+      endpoint="/model/update"
       validationFields={[...editableFields]}
-      redirectTo="/models"
+      redirectTo="/model"
       item={item}
       isOpen={isOpen}
       onClose={onClose}

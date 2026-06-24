@@ -196,7 +196,6 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
                         {key}
                       </th>
                     ))}
-                    {/* ── EXTRA COLUMNS headers ── */}
                     {extraColumns.map((col) => (
                       <th key={col.header} className="py-3 px-3 text-left">
                         {col.header}
@@ -235,7 +234,6 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
                           )
                         )}
 
-                        {/* ── EXTRA COLUMNS cells ── */}
                         {extraColumns.map((col) => (
                           <td key={`${getItemIdentifier(item, rowIndex)}-${col.header}`} className="py-3 px-3">
                             {col.render(item)}

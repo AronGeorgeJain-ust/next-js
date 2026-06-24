@@ -35,7 +35,7 @@ export default function Navbar({ collapsed, onToggleCollapse }) {
       }}
       className="flex items-center justify-between px-4 text-white"
     >
-      {/* Left — hamburger + brand */}
+
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleCollapse}
@@ -66,7 +66,6 @@ export default function Navbar({ collapsed, onToggleCollapse }) {
         </span>
       </div>
 
-      {/* Right — username, profile, logout */}
       <div className="flex items-center gap-2">
         {username && (
           <span

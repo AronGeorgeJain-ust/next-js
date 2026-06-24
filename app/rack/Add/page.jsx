@@ -13,8 +13,6 @@ const RackAdd = () => {
 
   const initialData = {
     identifier: "",
-    path: "",
-    roles: [],
   };
 
   return (
