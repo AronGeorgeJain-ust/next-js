@@ -4,13 +4,15 @@ import PropTypes from "prop-types";
 import EntityEdit from "@/components/common/EntityEdit";
 import EditModal from "@/components/common/EditModal";
 
-const WarehouseEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => {
-  const editableFields = ["identifier", "contactName", "contactNumber", "location", "region", "country"];
+const WarehouseEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => {
+  const editableFields = [
+    "identifier",
+    "contactName",
+    "contactNumber",
+    "location",
+    "region",
+    "country",
+  ];
 
   return (
     <EntityEdit

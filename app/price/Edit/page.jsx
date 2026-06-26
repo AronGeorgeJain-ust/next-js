@@ -5,12 +5,7 @@ import EntityEdit from "@/components/common/EntityEdit";
 import EditModal from "@/components/common/EditModal";
 import Dropdown from "@/components/dropdown/Dropdown";
 
-const PriceEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => {
+const PriceEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => {
   const editableFields = ["priceType", "value"];
 
   return (

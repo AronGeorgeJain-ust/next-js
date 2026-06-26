@@ -3,7 +3,14 @@ import CategoryEdit from "./Edit/page";
 
 const CategoryList = () => (
   <ModelList
-    keys={["id", "identifier", "name", "superCategory", "description", "status"]}
+    keys={[
+      "id",
+      "identifier",
+      "name",
+      "superCategory",
+      "description",
+      "status",
+    ]}
     modelName="category"
     EditComponent={CategoryEdit}
   />

@@ -3,7 +3,15 @@ import WarehouseEdit from "./Edit/page";
 
 const WarehouseList = () => (
   <ModelList
-    keys={["id", "identifier", "contactName", "contactNumber", "region", "country", "status"]}
+    keys={[
+      "id",
+      "identifier",
+      "contactName",
+      "contactNumber",
+      "region",
+      "country",
+      "status",
+    ]}
     modelName="warehouse"
     EditComponent={WarehouseEdit}
   />

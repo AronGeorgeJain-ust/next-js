@@ -20,8 +20,7 @@ const RackAdd = () => {
       modelName="rack"
       fields={fields}
       initialData={initialData}
-    >
-    </AddPage>
+    ></AddPage>
   );
 };
 

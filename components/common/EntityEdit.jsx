@@ -1,6 +1,12 @@
 "use client";
 
-import { Children, cloneElement, isValidElement, useEffect, useState } from "react";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useState,
+} from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/navigation";
 import api from "@/services/api";
@@ -24,9 +30,11 @@ const EntityEdit = ({
   const router = useRouter();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState("");
 
   useEffect(() => {
     if (item) {
+      setApiError("");
       setFormData(transformItem ? transformItem(item) : item);
     }
   }, [item, transformItem]);
@@ -66,15 +74,19 @@ const EntityEdit = ({
       onClose();
       router.push(redirectTo);
     } catch (err) {
-      console.error(err);
-      alert("Update failed");
-    }
+        const message =
+          err.response?.data?.message ||
+          err.response?.data?.error ||
+          "Update failed";
+
+        setApiError(message);
+      }
   };
 
   const renderedChildren = Children.map(children, (child) =>
     isValidElement(child)
-      ? cloneElement(child, { formData, handleChange, errors })
-      : child
+      ? cloneElement(child, { formData, handleChange, errors, errorMessage: apiError, })
+      : child,
   );
 
   return (
@@ -89,17 +101,20 @@ const EntityEdit = ({
             onClick={onClose}
             className="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600"
           >
-            Cancel
+            {apiError ? "Close" : "Cancel"}
           </button>
 
-          <button
-            onClick={handleUpdate}
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-          >
-            Save
-          </button>
+          {!apiError && (
+            <button
+              onClick={handleUpdate}
+              className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+            >
+              Save
+            </button>
+          )}
         </div>
       </div>
+      
     </div>
   );
 };

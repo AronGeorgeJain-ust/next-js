@@ -86,7 +86,9 @@ const CheckoutModal = ({
           {paymentMethod === "CASH" && (
             <>
               <div>
-                <label htmlFor="receivedAmount" className="font-medium">Received Amount</label>
+                <label htmlFor="receivedAmount" className="font-medium">
+                  Received Amount
+                </label>
 
                 <input
                   id="receivedAmount"

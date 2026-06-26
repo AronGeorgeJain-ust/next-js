@@ -11,7 +11,6 @@ const ProfilePage = () => {
   });
 
   useEffect(() => {
-    
     if (globalThis.window) {
       setProfile({
         username: globalThis.window.localStorage.getItem("username") || "",

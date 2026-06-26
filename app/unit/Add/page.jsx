@@ -22,8 +22,7 @@ const UnitAdd = () => {
       modelName="unit"
       fields={fields}
       initialData={initialData}
-    >
-    </AddPage>
+    ></AddPage>
   );
 };
 

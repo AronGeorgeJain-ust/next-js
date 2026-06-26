@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 
 import api from "@/services/api";
 
-export default function Sidebar({ collapsed = false, onToggleCollapse = () => {} }) {
+export default function Sidebar({
+  collapsed = false,
+  onToggleCollapse = () => {},
+}) {
   const pathname = usePathname();
 
   const [nodes, setNodes] = useState([]);
@@ -40,7 +43,9 @@ export default function Sidebar({ collapsed = false, onToggleCollapse = () => {}
     };
 
     fetchNodes();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (
@@ -59,7 +64,6 @@ export default function Sidebar({ collapsed = false, onToggleCollapse = () => {}
       }}
       className="text-white flex flex-col shadow-2xl"
     >
-
       <div className="flex-1 overflow-y-auto space-y-1.5 px-4 py-4">
         {loading && (
           <div className="space-y-2 animate-pulse">
@@ -92,7 +96,11 @@ export default function Sidebar({ collapsed = false, onToggleCollapse = () => {}
           !error &&
           nodes.map((node, index) => {
             const title =
-              node.identifier || node.name || node.label || node.path || `Item ${index + 1}`;
+              node.identifier ||
+              node.name ||
+              node.label ||
+              node.path ||
+              `Item ${index + 1}`;
             const path = node.path || "#";
             const isActive = pathname === path;
 

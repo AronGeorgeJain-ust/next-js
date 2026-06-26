@@ -7,10 +7,20 @@ import api from "@/services/api";
 import ProductEdit from "./Edit/page";
 
 const ProductList = () => {
-  const keys = ["id", "identifier", "name", "brandName", "category", "unit", "description", "status"];
+  const keys = [
+    "id",
+    "identifier",
+    "name",
+    "brandName",
+    "category",
+    "unit",
+    "description",
+    "status",
+  ];
   const modelName = "product";
 
-  const token = globalThis.window === undefined ? null : localStorage.getItem("token");
+  const token =
+    globalThis.window === undefined ? null : localStorage.getItem("token");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -18,14 +28,11 @@ const ProductList = () => {
 
   const handleEdit = async (identifier) => {
     try {
-      const res = await api.get(
-        `/${modelName}/get?identifier=${identifier}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await api.get(`/${modelName}/get?identifier=${identifier}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setSelectedItem(res.data);
       setIsModalOpen(true);

@@ -6,7 +6,10 @@ import Dropdown from "@/components/dropdown/Dropdown";
 
 const StockQuantityField = ({ formData = {}, handleChange, errors = {} }) => (
   <div className="w-full">
-    <label htmlFor="quantity" className="block mb-2 text-sm font-semibold text-gray-700">
+    <label
+      htmlFor="quantity"
+      className="block mb-2 text-sm font-semibold text-gray-700"
+    >
       Quantity
     </label>
     <input
@@ -30,9 +33,16 @@ StockQuantityField.propTypes = {
   errors: PropTypes.object,
 };
 
-const StockReorderLevelField = ({ formData = {}, handleChange, errors = {} }) => (
+const StockReorderLevelField = ({
+  formData = {},
+  handleChange,
+  errors = {},
+}) => (
   <div className="w-full">
-    <label htmlFor="reorderLevel" className="block mb-2 text-sm font-semibold text-gray-700">
+    <label
+      htmlFor="reorderLevel"
+      className="block mb-2 text-sm font-semibold text-gray-700"
+    >
       Reorder Level
     </label>
     <input
@@ -58,7 +68,10 @@ StockReorderLevelField.propTypes = {
 
 const StockWarehouseField = ({ formData = {}, handleChange, errors = {} }) => (
   <div className="w-full">
-    <label htmlFor="warehouse" className="block mb-2 text-sm font-semibold text-gray-700">
+    <label
+      htmlFor="warehouse"
+      className="block mb-2 text-sm font-semibold text-gray-700"
+    >
       Warehouse
     </label>
     <input
@@ -84,7 +97,10 @@ StockWarehouseField.propTypes = {
 
 const StockRackField = ({ formData = {}, handleChange, errors = {} }) => (
   <div className="w-full">
-    <label htmlFor="rack" className="block mb-2 text-sm font-semibold text-gray-700">
+    <label
+      htmlFor="rack"
+      className="block mb-2 text-sm font-semibold text-gray-700"
+    >
       Rack
     </label>
     <input
@@ -96,9 +112,7 @@ const StockRackField = ({ formData = {}, handleChange, errors = {} }) => (
       placeholder="Enter rack"
       className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
-    {errors.rack && (
-      <p className="mt-2 text-sm text-red-500">{errors.rack}</p>
-    )}
+    {errors.rack && <p className="mt-2 text-sm text-red-500">{errors.rack}</p>}
   </div>
 );
 
@@ -110,7 +124,10 @@ StockRackField.propTypes = {
 
 const StockShelfField = ({ formData = {}, handleChange, errors = {} }) => (
   <div className="w-full">
-    <label htmlFor="shelf" className="block mb-2 text-sm font-semibold text-gray-700">
+    <label
+      htmlFor="shelf"
+      className="block mb-2 text-sm font-semibold text-gray-700"
+    >
       Shelf
     </label>
     <input
@@ -147,11 +164,7 @@ const StockAdd = () => {
   const modelName = "stock";
 
   return (
-    <AddPage
-      modelName={modelName}
-      fields={fields}
-      initialData={initialData}
-    >
+    <AddPage modelName={modelName} fields={fields} initialData={initialData}>
       <Dropdown
         name="product"
         label="Product"

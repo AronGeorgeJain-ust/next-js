@@ -34,7 +34,7 @@ const Dropdown = ({
   const errorMessage = errors?.[name];
   const effectiveValue = value ?? formData?.[name];
   const effectiveOnChange = onChange ?? handleChange;
-  
+
   const requestBodyRef = useRef(requestBody);
   useEffect(() => {
     requestBodyRef.current = requestBody;
@@ -92,7 +92,9 @@ const Dropdown = ({
 
     fetchData();
 
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [endpoint, method, disableFetch, name]);
 
   const ensureArray = (val) => {
@@ -120,7 +122,10 @@ const Dropdown = ({
 
   return (
     <div className="w-full">
-      <label htmlFor={name} className="block mb-2 text-sm font-semibold text-gray-700">
+      <label
+        htmlFor={name}
+        className="block mb-2 text-sm font-semibold text-gray-700"
+      >
         {label}
       </label>
 
@@ -133,9 +138,7 @@ const Dropdown = ({
         className={`${selectClassName} ${errorMessage ? "border-red-400" : ""}`}
         disabled={disabled}
       >
-        {!multiple && (
-          <option value="">{placeholder}</option>
-        )}
+        {!multiple && <option value="">{placeholder}</option>}
 
         {renderedOptions.map((item, index) => (
           <option

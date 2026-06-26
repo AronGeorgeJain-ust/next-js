@@ -8,12 +8,7 @@ import ProductForm, {
   productValidationFields,
 } from "@/components/product/ProductForm";
 
-const ProductEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => {
+const ProductEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => {
   return (
     <EntityEdit
       title="Edit Product"

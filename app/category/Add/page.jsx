@@ -4,7 +4,6 @@ import AddPage from "@/components/common/AddPage";
 import Dropdown from "@/components/dropdown/Dropdown";
 
 const CategoryAdd = () => {
-
   const fields = [
     {
       name: "identifier",
@@ -33,11 +32,7 @@ const CategoryAdd = () => {
   const modelName = "category";
 
   return (
-    <AddPage
-      modelName={modelName}
-      fields={fields}
-      initialData={initialData}
-    >
+    <AddPage modelName={modelName} fields={fields} initialData={initialData}>
       <Dropdown
         name="superCategory"
         label="Super Category"
@@ -49,12 +44,13 @@ const CategoryAdd = () => {
           categories.filter(
             (category) =>
               ![formData.name, formData.identifier].includes(category.name) &&
-              ![formData.name, formData.identifier].includes(category.identifier)
+              ![formData.name, formData.identifier].includes(
+                category.identifier,
+              ),
           )
         }
         normalizeValue={(value) => (value === "" ? null : value)}
       />
-
     </AddPage>
   );
 };

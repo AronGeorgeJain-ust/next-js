@@ -85,9 +85,7 @@ const ProductGrid = ({ onAdd, addingProduct, headers }) => {
             </p>
 
             {p.category && (
-              <p className="text-xs text-gray-400 truncate">
-                {p.category}
-              </p>
+              <p className="text-xs text-gray-400 truncate">{p.category}</p>
             )}
 
             <div className="flex items-center gap-2 mt-1">
@@ -115,9 +113,7 @@ const ProductGrid = ({ onAdd, addingProduct, headers }) => {
             className="ml-2 w-7 h-7 rounded-lg border border-gray-100 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white disabled:opacity-40 transition-all duration-200 shrink-0"
           >
             {isAdding ? (
-              <span className="text-[10px] font-bold leading-none">
-                ...
-              </span>
+              <span className="text-[10px] font-bold leading-none">...</span>
             ) : (
               <ShoppingBag size={13} />
             )}

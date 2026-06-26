@@ -8,13 +8,9 @@ import EditModal from "@/components/common/EditModal";
 const transformUserItem = (item) => {
   let roles = [];
   if (Array.isArray(item.roles)) {
-    roles = item.roles.map(
-      (role) => role?.identifier || role?.name || role
-    );
+    roles = item.roles.map((role) => role?.identifier || role?.name || role);
   } else if (item.roles) {
-    roles = [
-      item.roles?.identifier || item.roles?.name || item.roles,
-    ];
+    roles = [item.roles?.identifier || item.roles?.name || item.roles];
   }
   return {
     ...item,
@@ -22,12 +18,7 @@ const transformUserItem = (item) => {
   };
 };
 
-const UserEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => {
+const UserEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => {
   const editableFields = ["name", "username", "phoneNo"];
 
   return (
@@ -76,7 +67,7 @@ UserEdit.propTypes = {
             identifier: PropTypes.string,
             name: PropTypes.string,
           }),
-        ])
+        ]),
       ),
       PropTypes.object,
       PropTypes.string,

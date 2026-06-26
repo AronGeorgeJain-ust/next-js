@@ -5,12 +5,7 @@ import EntityEdit from "@/components/common/EntityEdit";
 import Dropdown from "@/components/dropdown/Dropdown";
 import EditModal from "@/components/common/EditModal";
 
-const NodeEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => {
+const NodeEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => {
   const editableFields = ["identifier", "path"];
 
   return (

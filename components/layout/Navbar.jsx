@@ -35,7 +35,6 @@ export default function Navbar({ collapsed, onToggleCollapse }) {
       }}
       className="flex items-center justify-between px-4 text-white"
     >
-
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleCollapse}

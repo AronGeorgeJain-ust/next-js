@@ -22,7 +22,7 @@ const ModelList = ({ keys, modelName, EditComponent, extraColumns }) => {
       setSelectedItem(res.data);
       setIsModalOpen(true);
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
@@ -61,7 +61,7 @@ ModelList.propTypes = {
     PropTypes.shape({
       header: PropTypes.string.isRequired,
       render: PropTypes.func.isRequired,
-    })
+    }),
   ),
 };
 

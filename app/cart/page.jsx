@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  ShoppingCart,
-  UserPlus,
-} from "lucide-react";
+import { ShoppingCart, UserPlus } from "lucide-react";
 import api from "@/services/api";
 import SearchableDropdown from "@/components/dropdown/SearchableDropdown";
 import CheckoutModal from "@/components/cart/CheckoutModal";

@@ -22,8 +22,7 @@ const ShelfAdd = () => {
       modelName="shelf"
       fields={fields}
       initialData={initialData}
-    >
-    </AddPage>
+    ></AddPage>
   );
 };
 

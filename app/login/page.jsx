@@ -41,14 +41,11 @@ export default function LoginPage() {
     setErrors({});
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/api/authenticate",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(credentials),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/authenticate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
 
       const data = await response.json();
       const token = data?.token;
@@ -56,9 +53,7 @@ export default function LoginPage() {
 
       if (!response.ok || !token || token === "Error") {
         setMessage(
-          data?.message ||
-            data?.error ||
-            "Invalid username or password"
+          data?.message || data?.error || "Invalid username or password",
         );
         setMessageType("error");
       } else {
@@ -105,7 +100,10 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="username" className="text-sm text-gray-600 font-medium">
+            <label
+              htmlFor="username"
+              className="text-sm text-gray-600 font-medium"
+            >
               Email
             </label>
             <input
@@ -117,14 +115,15 @@ export default function LoginPage() {
               className="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
             />
             {errors.username && (
-              <p className="mt-2 text-sm text-red-500">
-                {errors.username}
-              </p>
+              <p className="mt-2 text-sm text-red-500">{errors.username}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="password" className="text-sm text-gray-600 font-medium">
+            <label
+              htmlFor="password"
+              className="text-sm text-gray-600 font-medium"
+            >
               Password
             </label>
             <div className="relative mt-1">
@@ -137,9 +136,7 @@ export default function LoginPage() {
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none pr-10"
               />
               {errors.password && (
-                <p className="mt-2 text-sm text-red-500">
-                  {errors.password}
-                </p>
+                <p className="mt-2 text-sm text-red-500">{errors.password}</p>
               )}
               <button
                 type="button"

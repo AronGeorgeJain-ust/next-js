@@ -66,10 +66,13 @@ const AddCustomerModal = ({ isOpen, onClose, onSaved, headers }) => {
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="w-full">
-              <label htmlFor="customerName" className="block mb-2 text-sm font-semibold text-gray-700">
+              <label
+                htmlFor="customerName"
+                className="block mb-2 text-sm font-semibold text-gray-700"
+              >
                 Customer Name
               </label>
-              <input 
+              <input
                 id="customerName"
                 type="text"
                 name="name"
@@ -84,10 +87,13 @@ const AddCustomerModal = ({ isOpen, onClose, onSaved, headers }) => {
             </div>
 
             <div className="w-full">
-              <label htmlFor="phoneNo" className="block mb-2 text-sm font-semibold text-gray-700">
+              <label
+                htmlFor="phoneNo"
+                className="block mb-2 text-sm font-semibold text-gray-700"
+              >
                 Phone Number
               </label>
-              <input 
+              <input
                 id="phoneNo"
                 type="text"
                 name="phoneNo"
@@ -102,7 +108,10 @@ const AddCustomerModal = ({ isOpen, onClose, onSaved, headers }) => {
             </div>
 
             <div className="w-full">
-              <label htmlFor="email" className="block mb-2 text-sm font-semibold text-gray-700">
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-semibold text-gray-700"
+              >
                 Email
               </label>
               <input
@@ -117,7 +126,10 @@ const AddCustomerModal = ({ isOpen, onClose, onSaved, headers }) => {
             </div>
 
             <div className="w-full">
-              <label htmlFor="creditLimit" className="block mb-2 text-sm font-semibold text-gray-700">
+              <label
+                htmlFor="creditLimit"
+                className="block mb-2 text-sm font-semibold text-gray-700"
+              >
                 Credit Limit
               </label>
               <input

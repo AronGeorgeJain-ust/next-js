@@ -10,12 +10,7 @@ import CustomerForm, {
   customerValidationFields,
 } from "@/components/customer/CustomerForm";
 
-const CustomerEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => (
+const CustomerEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => (
   <EntityEdit
     title="Edit Customer"
     endpoint="/customer/update"

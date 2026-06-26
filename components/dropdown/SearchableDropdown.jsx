@@ -58,7 +58,6 @@ const SearchableDropdown = ({
         });
         setResults(res.data ?? []);
       } catch (err) {
-        console.error("Search failed", err);
         setResults([]);
       } finally {
         setLoading(false);
@@ -79,15 +78,11 @@ const SearchableDropdown = ({
 
   if (loading) {
     dropdownContent = (
-      <div className="px-3 py-2 text-sm text-gray-400">
-        Searching…
-      </div>
+      <div className="px-3 py-2 text-sm text-gray-400">Searching…</div>
     );
   } else if (search.trim().length < minChars) {
     dropdownContent = (
-      <div className="px-3 py-2 text-sm text-gray-400">
-        Type to search…
-      </div>
+      <div className="px-3 py-2 text-sm text-gray-400">Type to search…</div>
     );
   } else if (results.length > 0) {
     dropdownContent = results.map((item) => (
@@ -102,9 +97,7 @@ const SearchableDropdown = ({
     ));
   } else {
     dropdownContent = (
-      <div className="px-3 py-2 text-sm text-gray-500">
-        No results found
-      </div>
+      <div className="px-3 py-2 text-sm text-gray-500">No results found</div>
     );
   }
 

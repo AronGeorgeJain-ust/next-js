@@ -18,9 +18,7 @@ export default function OrderPage() {
   const [loading, setLoading] = useState(true);
 
   const token =
-    globalThis.window === undefined
-      ? null
-      : localStorage.getItem("token");
+    globalThis.window === undefined ? null : localStorage.getItem("token");
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -39,7 +37,7 @@ export default function OrderPage() {
           sortField: "createdOn",
           sortDirection: "DESC",
         },
-        { headers }
+        { headers },
       );
 
       setOrders(res.data.dtoList ?? []);
@@ -51,18 +49,15 @@ export default function OrderPage() {
   };
 
   const downloadReceipt = async (order) => {
-    const res = await api.get(
-      `/order/get?identifier=${order.identifier}`,
-      { headers }
-    );
+    const res = await api.get(`/order/get?identifier=${order.identifier}`, {
+      headers,
+    });
 
     const fullOrder = res.data;
 
     const doc = generateReceiptPdf(fullOrder);
 
-    doc.save(
-      `Receipt-${fullOrder.identifier}.pdf`
-    );
+    doc.save(`Receipt-${fullOrder.identifier}.pdf`);
   };
 
   useEffect(() => {
@@ -71,41 +66,31 @@ export default function OrderPage() {
 
   let tableContent;
 
-if (loading) {
-  tableContent = (
-    <tr>
-      <td
-        colSpan={7}
-        className="text-center py-8 text-gray-500"
-      >
-        Loading...
-      </td>
-    </tr>
-  );
-} else if (orders.length === 0) {
-  tableContent = (
-    <tr>
-      <td
-        colSpan={7}
-        className="text-center py-8 text-gray-500"
-      >
-        No orders found
-      </td>
-    </tr>
-  );
-} else {
+  if (loading) {
+    tableContent = (
+      <tr>
+        <td colSpan={7} className="text-center py-8 text-gray-500">
+          Loading...
+        </td>
+      </tr>
+    );
+  } else if (orders.length === 0) {
+    tableContent = (
+      <tr>
+        <td colSpan={7} className="text-center py-8 text-gray-500">
+          No orders found
+        </td>
+      </tr>
+    );
+  } else {
     tableContent = orders.map((order) => (
       <tr
         key={order.identifier}
         className="border-b border-gray-100 hover:bg-gray-50"
       >
-        <td className="px-4 py-3 font-medium">
-          {order.identifier}
-        </td>
+        <td className="px-4 py-3 font-medium">{order.identifier}</td>
 
-        <td className="px-4 py-3">
-          {order.customer}
-        </td>
+        <td className="px-4 py-3">{order.customer}</td>
 
         <td className="px-4 py-3 text-right">
           {currency(order.originalPrice)}
@@ -119,18 +104,13 @@ if (loading) {
           {currency(order.totalPrice)}
         </td>
 
-        <td className="px-4 py-3 text-center">
-          {order.paymentMethod}
-        </td>
+        <td className="px-4 py-3 text-center">{order.paymentMethod}</td>
 
         <td className="px-4 py-3">
           <div className="flex justify-center gap-2">
-
             <button
               onClick={() =>
-                router.push(
-                  `/order/view?identifier=${order.identifier}`
-                )
+                router.push(`/order/view?identifier=${order.identifier}`)
               }
               className="p-2 rounded-lg text-blue-600 hover:bg-blue-50"
               title="View Order"
@@ -145,7 +125,6 @@ if (loading) {
             >
               <Printer size={16} />
             </button>
-
           </div>
         </td>
       </tr>
@@ -155,11 +134,8 @@ if (loading) {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Orders
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
 
           <button
             onClick={() => router.push("/cart")}
@@ -178,21 +154,14 @@ if (loading) {
                 <th className="px-4 py-3 text-right">Original</th>
                 <th className="px-4 py-3 text-right">Discount</th>
                 <th className="px-4 py-3 text-right">Total</th>
-                <th className="px-4 py-3 text-center">
-                  Payment
-                </th>
-                <th className="px-4 py-3 text-center">
-                  Actions
-                </th>
+                <th className="px-4 py-3 text-center">Payment</th>
+                <th className="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
 
-            <tbody>
-              {tableContent}
-            </tbody>
+            <tbody>{tableContent}</tbody>
           </table>
         </div>
-
       </div>
     </div>
   );

@@ -24,11 +24,7 @@ const NodeAdd = () => {
   };
 
   return (
-    <AddPage
-      modelName="node"
-      fields={fields}
-      initialData={initialData}
-    >
+    <AddPage modelName="node" fields={fields} initialData={initialData}>
       <Dropdown
         name="roles"
         label="Roles"

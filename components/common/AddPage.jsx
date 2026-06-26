@@ -108,9 +108,11 @@ const AddPage = ({ modelName, fields, initialData, children }) => {
                 : "bg-green-50 text-green-700 border border-green-200"
             }`}
           >
-            {messageType === "error"
-              ? <AlertCircle size={16} className="shrink-0" />
-              : <CheckCircle size={16} className="shrink-0" />}
+            {messageType === "error" ? (
+              <AlertCircle size={16} className="shrink-0" />
+            ) : (
+              <CheckCircle size={16} className="shrink-0" />
+            )}
             {message}
           </div>
         )}
@@ -144,7 +146,9 @@ const AddPage = ({ modelName, fields, initialData, children }) => {
               )}
 
               {errors[field.name] && (
-                <p className="mt-1 text-sm text-red-500">{errors[field.name]}</p>
+                <p className="mt-1 text-sm text-red-500">
+                  {errors[field.name]}
+                </p>
               )}
             </div>
           ))}

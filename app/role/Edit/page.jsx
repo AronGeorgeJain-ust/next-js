@@ -4,12 +4,7 @@ import PropTypes from "prop-types";
 import EntityEdit from "@/components/common/EntityEdit";
 import EditModal from "@/components/common/EditModal";
 
-const RoleEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => {
+const RoleEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => {
   const editableFields = ["identifier", "description"];
 
   return (

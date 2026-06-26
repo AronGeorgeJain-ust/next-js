@@ -3,7 +3,6 @@
 import AddPage from "@/components/common/AddPage";
 
 const RoleAdd = () => {
-
   const fields = [
     {
       name: "identifier",
@@ -29,8 +28,7 @@ const RoleAdd = () => {
       modelName={modelName}
       fields={fields}
       initialData={initialData}
-    >
-    </AddPage>
+    ></AddPage>
   );
 };
 

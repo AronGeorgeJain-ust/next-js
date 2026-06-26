@@ -11,12 +11,9 @@ export default function Home() {
             Welcome to Dashboard
           </h1>
 
-          <p className="text-gray-600 mb-6">
-            You are successfully logged in.
-          </p>
+          <p className="text-gray-600 mb-6">You are successfully logged in.</p>
 
           <div className="flex gap-4">
-
             <Link
               href="/profile"
               className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"

@@ -141,8 +141,7 @@ const defaultValidationRules = {
 };
 
 const getFieldLabel = (fieldName) =>
-  fieldLabels[fieldName] ||
-  fieldName.replaceAll(/([A-Z])/g, " $1").trim();
+  fieldLabels[fieldName] || fieldName.replaceAll(/([A-Z])/g, " $1").trim();
 
 const isEmptyValue = (value) =>
   value === undefined ||
@@ -155,17 +154,29 @@ const getErrorMessage = (rule, label, fallback) =>
 
 const validateEmail = (value, rule, label) =>
   typeof value === "string" && !emailPattern.test(value.trim())
-    ? getErrorMessage(rule, label, () => `Enter a valid ${label.toLowerCase()}.`)
+    ? getErrorMessage(
+        rule,
+        label,
+        () => `Enter a valid ${label.toLowerCase()}.`,
+      )
     : null;
 
 const validatePhone = (value, rule, label) =>
   typeof value === "string" && !phonePattern.test(value.trim())
-    ? getErrorMessage(rule, label, () => `Enter a valid ${label.toLowerCase()}.`)
+    ? getErrorMessage(
+        rule,
+        label,
+        () => `Enter a valid ${label.toLowerCase()}.`,
+      )
     : null;
 
 const validatePattern = (value, rule, label) =>
   typeof value === "string" && !rule.pattern.test(value)
-    ? getErrorMessage(rule, label, () => `Enter a valid ${label.toLowerCase()}.`)
+    ? getErrorMessage(
+        rule,
+        label,
+        () => `Enter a valid ${label.toLowerCase()}.`,
+      )
     : null;
 
 const validateArray = (value, rule, label) => {
@@ -193,18 +204,20 @@ const validateNumeric = (value, rule, label) => {
 
 const validateMinLength = (value, rule, label) =>
   typeof value === "string" && value.trim().length < rule.minLength
-    ? rule.invalidMessage || `${label} must be at least ${rule.minLength} characters.`
+    ? rule.invalidMessage ||
+      `${label} must be at least ${rule.minLength} characters.`
     : null;
 
 const validateMaxLength = (value, rule, label) =>
   typeof value === "string" && value.trim().length > rule.maxLength
-    ? rule.invalidMessage || `${label} must not exceed ${rule.maxLength} characters.`
+    ? rule.invalidMessage ||
+      `${label} must not exceed ${rule.maxLength} characters.`
     : null;
 
 const runValidation = (value, rule, label) => {
-  if (rule.email)   return validateEmail(value, rule, label);
-  if (rule.phone)   return validatePhone(value, rule, label);
-  if (rule.array)   return validateArray(value, rule, label);
+  if (rule.email) return validateEmail(value, rule, label);
+  if (rule.phone) return validatePhone(value, rule, label);
+  if (rule.array) return validateArray(value, rule, label);
   if (rule.numeric) return validateNumeric(value, rule, label);
 
   if (rule.maxLength) {
@@ -224,17 +237,14 @@ const runValidation = (value, rule, label) => {
 
 export const validateForm = (
   formData = {},
-  { fields = Object.keys(formData), overrides = {} } = {}
+  { fields = Object.keys(formData), overrides = {} } = {},
 ) => {
   const rules = {
     ...defaultValidationRules,
     ...overrides,
   };
 
-  const fieldsToValidate = new Set([
-    ...fields,
-    ...Object.keys(overrides),
-  ]);
+  const fieldsToValidate = new Set([...fields, ...Object.keys(overrides)]);
 
   return Object.entries(rules).reduce((errors, [fieldName, rule]) => {
     if (!fieldsToValidate.has(fieldName)) return errors;

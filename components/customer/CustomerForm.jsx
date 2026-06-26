@@ -9,8 +9,9 @@ export const customerBaseFields = [
   { name: "creditLimit", type: "number", label: "Credit Limit" },
 ];
 
-export const customerEditableFields =
-  customerBaseFields.map((field) => field.name);
+export const customerEditableFields = customerBaseFields.map(
+  (field) => field.name,
+);
 
 export const customerInitialData = {
   name: "",
@@ -45,13 +46,7 @@ export const customerValidationFields = [
   "shippingAddress",
 ];
 
-const AddressInput = ({
-  label,
-  name,
-  value,
-  onChange,
-  placeholder,
-}) => (
+const AddressInput = ({ label, name, value, onChange, placeholder }) => (
   <div>
     <label className="block mb-1 text-sm font-semibold text-gray-700">
       {label}
@@ -75,11 +70,7 @@ AddressInput.propTypes = {
   placeholder: PropTypes.string,
 };
 
-const CustomerForm = ({
-  formData = {},
-  handleChange,
-  errors = {},
-}) => {
+const CustomerForm = ({ formData = {}, handleChange, errors = {} }) => {
   const billingAddress = formData.billingAddress || {};
   const shippingAddress = formData.shippingAddress || {};
 
@@ -99,7 +90,8 @@ const CustomerForm = ({
 
   return (
     <>
-=      <div className="w-full">
+      ={" "}
+      <div className="w-full">
         <label
           htmlFor="partyType"
           className="block mb-2 text-sm font-semibold text-gray-700"
@@ -121,12 +113,9 @@ const CustomerForm = ({
         </select>
 
         {errors.partyType && (
-          <p className="mt-2 text-sm text-red-500">
-            {errors.partyType}
-          </p>
+          <p className="mt-2 text-sm text-red-500">{errors.partyType}</p>
         )}
       </div>
-
       <div className="w-full">
         <label
           htmlFor="balance"
@@ -158,16 +147,11 @@ const CustomerForm = ({
         </div>
 
         {errors.balance && (
-          <p className="mt-2 text-sm text-red-500">
-            {errors.balance}
-          </p>
+          <p className="mt-2 text-sm text-red-500">{errors.balance}</p>
         )}
       </div>
-
       <div className="w-full">
-        <p className="mb-3 text-sm font-bold text-red-500">
-          — Billing Address
-        </p>
+        <p className="mb-3 text-sm font-bold text-red-500">— Billing Address</p>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <AddressInput
@@ -175,11 +159,7 @@ const CustomerForm = ({
             name="addressLine"
             value={billingAddress.addressLine}
             onChange={(e) =>
-              handleAddressChange(
-                "billingAddress",
-                billingAddress,
-                e
-              )
+              handleAddressChange("billingAddress", billingAddress, e)
             }
             placeholder="Enter address"
           />
@@ -189,11 +169,7 @@ const CustomerForm = ({
             name="city"
             value={billingAddress.city}
             onChange={(e) =>
-              handleAddressChange(
-                "billingAddress",
-                billingAddress,
-                e
-              )
+              handleAddressChange("billingAddress", billingAddress, e)
             }
             placeholder="Enter city"
           />
@@ -203,11 +179,7 @@ const CustomerForm = ({
             name="state"
             value={billingAddress.state}
             onChange={(e) =>
-              handleAddressChange(
-                "billingAddress",
-                billingAddress,
-                e
-              )
+              handleAddressChange("billingAddress", billingAddress, e)
             }
             placeholder="Enter state"
           />
@@ -217,11 +189,7 @@ const CustomerForm = ({
             name="zip"
             value={billingAddress.zip}
             onChange={(e) =>
-              handleAddressChange(
-                "billingAddress",
-                billingAddress,
-                e
-              )
+              handleAddressChange("billingAddress", billingAddress, e)
             }
             placeholder="Enter zip code"
           />
@@ -231,17 +199,12 @@ const CustomerForm = ({
             name="country"
             value={billingAddress.country}
             onChange={(e) =>
-              handleAddressChange(
-                "billingAddress",
-                billingAddress,
-                e
-              )
+              handleAddressChange("billingAddress", billingAddress, e)
             }
             placeholder="Enter country"
           />
         </div>
       </div>
-
       <div className="w-full">
         <p className="mb-3 text-sm font-bold text-red-500">
           — Shipping Address
@@ -253,11 +216,7 @@ const CustomerForm = ({
             name="addressLine"
             value={shippingAddress.addressLine}
             onChange={(e) =>
-              handleAddressChange(
-                "shippingAddress",
-                shippingAddress,
-                e
-              )
+              handleAddressChange("shippingAddress", shippingAddress, e)
             }
             placeholder="Enter address"
           />
@@ -267,11 +226,7 @@ const CustomerForm = ({
             name="city"
             value={shippingAddress.city}
             onChange={(e) =>
-              handleAddressChange(
-                "shippingAddress",
-                shippingAddress,
-                e
-              )
+              handleAddressChange("shippingAddress", shippingAddress, e)
             }
             placeholder="Enter city"
           />
@@ -281,11 +236,7 @@ const CustomerForm = ({
             name="state"
             value={shippingAddress.state}
             onChange={(e) =>
-              handleAddressChange(
-                "shippingAddress",
-                shippingAddress,
-                e
-              )
+              handleAddressChange("shippingAddress", shippingAddress, e)
             }
             placeholder="Enter state"
           />
@@ -295,11 +246,7 @@ const CustomerForm = ({
             name="zip"
             value={shippingAddress.zip}
             onChange={(e) =>
-              handleAddressChange(
-                "shippingAddress",
-                shippingAddress,
-                e
-              )
+              handleAddressChange("shippingAddress", shippingAddress, e)
             }
             placeholder="Enter zip code"
           />
@@ -309,11 +256,7 @@ const CustomerForm = ({
             name="country"
             value={shippingAddress.country}
             onChange={(e) =>
-              handleAddressChange(
-                "shippingAddress",
-                shippingAddress,
-                e
-              )
+              handleAddressChange("shippingAddress", shippingAddress, e)
             }
             placeholder="Enter country"
           />

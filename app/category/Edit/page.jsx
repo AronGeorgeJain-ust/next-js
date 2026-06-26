@@ -5,12 +5,7 @@ import EntityEdit from "@/components/common/EntityEdit";
 import Dropdown from "@/components/dropdown/Dropdown";
 import EditModal from "@/components/common/EditModal";
 
-const CategoryEdit = ({
-  isOpen,
-  onClose,
-  item,
-  onUpdateSuccess,
-}) => {
+const CategoryEdit = ({ isOpen, onClose, item, onUpdateSuccess }) => {
   const editableFields = ["identifier", "description"];
 
   return (
@@ -37,7 +32,9 @@ const CategoryEdit = ({
           categories.filter(
             (category) =>
               ![formData?.name, formData?.identifier].includes(category.name) &&
-              ![formData?.name, formData?.identifier].includes(category.identifier)
+              ![formData?.name, formData?.identifier].includes(
+                category.identifier,
+              ),
           )
         }
         normalizeValue={(value) => (value === "" ? null : value)}

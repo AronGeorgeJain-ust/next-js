@@ -22,7 +22,9 @@ export const productBaseFields = [
   },
 ];
 
-export const productEditableFields = productBaseFields.map((field) => field.name);
+export const productEditableFields = productBaseFields.map(
+  (field) => field.name,
+);
 
 export const productInitialData = {
   identifier: "",

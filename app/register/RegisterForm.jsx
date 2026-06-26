@@ -90,7 +90,6 @@ export default function RegisterForm({ roles = [] }) {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <div>
             <input
               name="name"
@@ -99,7 +98,9 @@ export default function RegisterForm({ roles = [] }) {
               onChange={handleChange}
               className="w-full border p-3 rounded"
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
           </div>
 
           <div>
@@ -110,7 +111,9 @@ export default function RegisterForm({ roles = [] }) {
               onChange={handleChange}
               className="w-full border p-3 rounded"
             />
-            {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+            )}
           </div>
 
           <div>
@@ -126,7 +129,9 @@ export default function RegisterForm({ roles = [] }) {
               value={form.roles}
               onChange={handleChange}
             />
-            {errors.roles && <p className="text-red-500 text-sm mt-1">{errors.roles}</p>}
+            {errors.roles && (
+              <p className="text-red-500 text-sm mt-1">{errors.roles}</p>
+            )}
           </div>
 
           <div>
@@ -137,7 +142,9 @@ export default function RegisterForm({ roles = [] }) {
               onChange={handleChange}
               className="w-full border p-3 rounded"
             />
-            {errors.phoneNo && <p className="text-red-500 text-sm mt-1">{errors.phoneNo}</p>}
+            {errors.phoneNo && (
+              <p className="text-red-500 text-sm mt-1">{errors.phoneNo}</p>
+            )}
           </div>
 
           <div>
@@ -159,7 +166,9 @@ export default function RegisterForm({ roles = [] }) {
               </button>
             </div>
             {errors.userCredential && (
-              <p className="text-red-500 text-sm mt-1">{errors.userCredential}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.userCredential}
+              </p>
             )}
           </div>
 

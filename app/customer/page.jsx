@@ -13,7 +13,6 @@ const AddressModal = ({ label, address, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
-
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-700"
@@ -38,7 +37,6 @@ const AddressModal = ({ label, address, onClose }) => {
             <p className="mt-2 text-gray-500">📞 {address.phoneNo}</p>
           )}
         </div>
-
       </div>
     </div>
   );
@@ -69,7 +67,7 @@ const CustomerList = () => {
       const token = globalThis.localStorage?.getItem("token");
       const res = await api.get(
         `/address/get?phoneNo=${phoneNo}&addressType=${type}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       setModal({
         label: type === "billing" ? "Billing Address" : "Shipping Address",

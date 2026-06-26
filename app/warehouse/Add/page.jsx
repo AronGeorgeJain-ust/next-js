@@ -3,7 +3,6 @@
 import AddPage from "@/components/common/AddPage";
 
 const WarehouseAdd = () => {
-
   const fields = [
     {
       name: "identifier",
@@ -53,8 +52,7 @@ const WarehouseAdd = () => {
       modelName={modelName}
       fields={fields}
       initialData={initialData}
-    >
-    </AddPage>
+    ></AddPage>
   );
 };
 

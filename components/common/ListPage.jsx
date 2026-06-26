@@ -7,7 +7,13 @@ import { Search, X } from "lucide-react";
 
 import api from "@/services/api";
 
-const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns = [] }) => {
+const ListPage = ({
+  keys,
+  modelName,
+  onEdit,
+  setListUpdateHandler,
+  extraColumns = [],
+}) => {
   const router = useRouter();
 
   let token = null;
@@ -28,6 +34,11 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
   const isSearching = normalizedSearch.length > 0;
   const paginationPage = isSearching ? 0 : page;
   const paginationSize = isSearching ? 1000 : sizePerPage;
+  const [errorModal, setErrorModal] = useState({
+    open: false,
+    title: "",
+    message: "",
+  });
 
   const paginationDto = {
     page: paginationPage,
@@ -35,7 +46,10 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
   };
 
   const getItemIdentifier = (item, rowIndex) =>
-    item?.identifier ?? item?.id ?? item?.username ?? `${modelName}-${rowIndex}`;
+    item?.identifier ??
+    item?.id ??
+    item?.username ??
+    `${modelName}-${rowIndex}`;
 
   const filteredData = listData
     .map((item, rowIndex) => ({ item, rowIndex }))
@@ -45,29 +59,32 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
       return keys.some((key) =>
         String(item?.[key] ?? "")
           .toLowerCase()
-          .includes(normalizedSearch)
+          .includes(normalizedSearch),
       );
     });
 
   const fetchList = async () => {
     try {
-      const res = await api.post(
-        `/${modelName}/list`,
-        paginationDto,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await api.post(`/${modelName}/list`, paginationDto, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       setListData(res.data.dtoList || []);
       setTotalPages(res.data.totalPages || 0);
-
     } catch (err) {
-      console.error(err);
-      setMessage("Failed to load data");
+
+      const message =
+        err.response?.data?.message ||
+        "Something went wrong";
+
+      setErrorModal({
+        open: true,
+        title: `Error ${err.response?.status || ""}`,
+        message,
+      });
     }
   };
 
@@ -87,29 +104,24 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
   };
 
   const handleDelete = async (identifier) => {
     if (globalThis.confirm("Are you sure you want to delete this item?")) {
       try {
-        await api.delete(
-          `/${modelName}/delete?identifier=${identifier}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await api.delete(`/${modelName}/delete?identifier=${identifier}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setMessage(`${modelName} deleted successfully`);
         setTimeout(() => setMessage(""), 3000);
 
         fetchList();
-
       } catch (err) {
-        console.error(err);
         setMessage("Delete failed");
       }
     }
@@ -118,10 +130,11 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
   const handleUpdateSuccess = (updatedItem) => {
     setListData((prev) =>
       prev.map((item, rowIndex) =>
-        getItemIdentifier(item, rowIndex) === getItemIdentifier(updatedItem, rowIndex)
+        getItemIdentifier(item, rowIndex) ===
+        getItemIdentifier(updatedItem, rowIndex)
           ? updatedItem
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -140,7 +153,6 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-100 to-blue-300 p-6">
       <div className="max-w-6xl mx-auto">
-
         <h2 className="text-3xl font-bold text-white text-center mb-6">
           {modelName.charAt(0).toUpperCase() + modelName.slice(1)} List
         </h2>
@@ -187,7 +199,6 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
-
                 <thead>
                   <tr className="border-b">
                     {keys.map((key) => (
@@ -206,7 +217,9 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
 
                 <tbody>
                   {filteredData.map(({ item, rowIndex }) => {
-                    const displayedRowIndex = isSearching ? rowIndex : page * sizePerPage + rowIndex;
+                    const displayedRowIndex = isSearching
+                      ? rowIndex
+                      : page * sizePerPage + rowIndex;
                     return (
                       <tr
                         key={getItemIdentifier(item, rowIndex)}
@@ -214,8 +227,14 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
                       >
                         {keys.map((key) =>
                           key === "status" ? (
-                            <td key={`${getItemIdentifier(item, rowIndex)}-${key}`} className="py-3 px-3">
-                              <label className="relative inline-flex items-center cursor-pointer" aria-label="Toggle status">
+                            <td
+                              key={`${getItemIdentifier(item, rowIndex)}-${key}`}
+                              className="py-3 px-3"
+                            >
+                              <label
+                                className="relative inline-flex items-center cursor-pointer"
+                                aria-label="Toggle status"
+                              >
                                 <input
                                   type="checkbox"
                                   className="sr-only peer"
@@ -227,14 +246,22 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
                               </label>
                             </td>
                           ) : (
-                            <td key={`${getItemIdentifier(item, rowIndex)}-${key}`} className="py-3 px-3">
-                              {key === "id" ? displayedRowIndex + 1 : String(item[key] ?? "")}
+                            <td
+                              key={`${getItemIdentifier(item, rowIndex)}-${key}`}
+                              className="py-3 px-3"
+                            >
+                              {key === "id"
+                                ? displayedRowIndex + 1
+                                : String(item[key] ?? "")}
                             </td>
-                          )
+                          ),
                         )}
 
                         {extraColumns.map((col) => (
-                          <td key={`${getItemIdentifier(item, rowIndex)}-${col.header}`} className="py-3 px-3">
+                          <td
+                            key={`${getItemIdentifier(item, rowIndex)}-${col.header}`}
+                            className="py-3 px-3"
+                          >
                             {col.render(item)}
                           </td>
                         ))}
@@ -242,26 +269,31 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
                         <td className="py-3 px-3">
                           <div className="flex gap-2">
                             <button
-                              onClick={() => onEdit(getItemIdentifier(item, rowIndex), fetchList)}
+                              onClick={() =>
+                                onEdit(
+                                  getItemIdentifier(item, rowIndex),
+                                  fetchList,
+                                )
+                              }
                               className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg shadow"
                             >
                               Update
                             </button>
 
                             <button
-                              onClick={() => handleDelete(getItemIdentifier(item, rowIndex))}
+                              onClick={() =>
+                                handleDelete(getItemIdentifier(item, rowIndex))
+                              }
                               className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg shadow"
                             >
                               Delete
                             </button>
                           </div>
                         </td>
-
                       </tr>
                     );
                   })}
                 </tbody>
-
               </table>
 
               {!isSearching && (
@@ -287,7 +319,6 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
                   </button>
                 </div>
               )}
-
             </div>
           )}
         </div>
@@ -307,8 +338,35 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
             + Add {modelName}
           </button>
         </div>
-
       </div>
+      {errorModal.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <h2 className="mb-3 text-xl font-bold text-red-600">
+              {errorModal.title}
+            </h2>
+
+            <p className="mb-6 text-gray-700">
+              {errorModal.message}
+            </p>
+
+            <div className="flex justify-end">
+              <button
+                onClick={() =>
+                  setErrorModal({
+                    open: false,
+                    title: "",
+                    message: "",
+                  })
+                }
+                className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -322,7 +380,7 @@ ListPage.propTypes = {
     PropTypes.shape({
       header: PropTypes.string.isRequired,
       render: PropTypes.func.isRequired,
-    })
+    }),
   ),
 };
 

@@ -26,8 +26,7 @@ const ModelsAdd = () => {
       modelName="model"
       fields={fields}
       initialData={initialData}
-    >
-    </AddPage>
+    ></AddPage>
   );
 };
 
