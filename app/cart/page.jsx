@@ -98,7 +98,7 @@ const CartPage = () => {
     const entry = entries[index];
     if (!qty || Number(qty) < 1) return;
     try {
-      await api.post(
+      await api.put(
         "/cartentry/update",
         { ...entry, quantity: Number(qty) },
         { headers },
@@ -112,7 +112,7 @@ const CartPage = () => {
   const handleRemove = async (index) => {
     const entry = entries[index];
     try {
-      await api.get(`/cartentry/delete?identifier=${entry.identifier}`, {
+      await api.delete(`/cartentry/delete?identifier=${entry.identifier}`, {
         headers,
       });
       await fetchCart(customer);
@@ -126,7 +126,7 @@ const CartPage = () => {
     if (!customer) return;
     if (!globalThis.confirm("Clear this cart?")) return;
     try {
-      await api.get(`/cart/delete?identifier=${customer}`, { headers });
+      await api.delete(`/cart/delete?identifier=${customer}`, { headers });
       setCartData(null);
       setEntries([]);
       showMessage("Cart cleared");

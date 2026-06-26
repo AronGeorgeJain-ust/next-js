@@ -55,7 +55,7 @@ const EntityEdit = ({
     setErrors({});
 
     try {
-      await api.post(endpoint, formData, {
+      await api.put(endpoint, formData, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
           "Content-Type": "application/json",

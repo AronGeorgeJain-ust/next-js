@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Search, X } from "lucide-react";
 
@@ -78,7 +77,7 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
     updatedList[rowIndex].status = !updatedList[rowIndex].status;
     setListData(updatedList);
 
-    api.post(
+    api.put(
       `/${modelName}/toggle`,
       {
         identifier: updatedList[rowIndex].identifier,
@@ -95,8 +94,8 @@ const ListPage = ({ keys, modelName, onEdit, setListUpdateHandler, extraColumns 
   const handleDelete = async (identifier) => {
     if (globalThis.confirm("Are you sure you want to delete this item?")) {
       try {
-        await axios.get(
-          `http://localhost:8080/api/${modelName}/delete?identifier=${identifier}`,
+        await api.delete(
+          `/${modelName}/delete?identifier=${identifier}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
