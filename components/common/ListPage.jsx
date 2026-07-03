@@ -30,10 +30,6 @@ const ListPage = ({
   const [sizePerPage] = useState(4);
   const [totalPages, setTotalPages] = useState(0);
 
-  const normalizedSearch = searchTerm.trim().toLowerCase();
-  const isSearching = normalizedSearch.length > 0;
-  const paginationPage = isSearching ? 0 : page;
-  const paginationSize = isSearching ? 1000 : sizePerPage;
   const [errorModal, setErrorModal] = useState({
     open: false,
     title: "",
@@ -41,8 +37,9 @@ const ListPage = ({
   });
 
   const paginationDto = {
-    page: paginationPage,
-    sizePerPage: paginationSize,
+    page,
+    sizePerPage,
+    keyword: searchTerm.trim(),
   };
 
   const getItemIdentifier = (item, rowIndex) =>
@@ -51,17 +48,10 @@ const ListPage = ({
     item?.username ??
     `${modelName}-${rowIndex}`;
 
-  const filteredData = listData
-    .map((item, rowIndex) => ({ item, rowIndex }))
-    .filter(({ item }) => {
-      if (!normalizedSearch) return true;
-
-      return keys.some((key) =>
-        String(item?.[key] ?? "")
-          .toLowerCase()
-          .includes(normalizedSearch),
-      );
-    });
+  const filteredData = listData.map((item, rowIndex) => ({
+    item,
+    rowIndex,
+  }));
 
   const fetchList = async () => {
     try {
@@ -122,6 +112,7 @@ const ListPage = ({
 
         fetchList();
       } catch (err) {
+        console.log(err)
         setMessage("Delete failed");
       }
     }
@@ -140,7 +131,7 @@ const ListPage = ({
 
   useEffect(() => {
     fetchList();
-  }, [modelName, page, isSearching]);
+  }, [modelName, page, searchTerm]);
 
   useEffect(() => {
     setPage(0);
@@ -194,7 +185,7 @@ const ListPage = ({
 
           {filteredData.length === 0 ? (
             <div className="text-center text-gray-600">
-              {searchTerm ? "No matching data found" : "No data found"}
+              No data found
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -217,9 +208,7 @@ const ListPage = ({
 
                 <tbody>
                   {filteredData.map(({ item, rowIndex }) => {
-                    const displayedRowIndex = isSearching
-                      ? rowIndex
-                      : page * sizePerPage + rowIndex;
+                    const displayedRowIndex = page * sizePerPage + rowIndex;
                     return (
                       <tr
                         key={getItemIdentifier(item, rowIndex)}
@@ -296,8 +285,7 @@ const ListPage = ({
                 </tbody>
               </table>
 
-              {!isSearching && (
-                <div className="flex justify-center gap-3 mt-4">
+              <div className="flex justify-center gap-3 mt-4">
                   <button
                     disabled={page === 0}
                     onClick={() => setPage((p) => p - 1)}
@@ -318,7 +306,6 @@ const ListPage = ({
                     Next
                   </button>
                 </div>
-              )}
             </div>
           )}
         </div>
